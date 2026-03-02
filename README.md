@@ -1,16 +1,37 @@
-# alapon
+# Alapon 💬
 
-A new Flutter project.
+**Alapon** is a modern Flutter chat application built using **Clean Architecture** to ensure high maintainability, scalability, and testability.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Tech Stack & Versions
+* **Flutter Version:** 3.3.8 
+* **Android SDK:** 35 (Latest)
+* **Architecture:** Clean Architecture (Feature-driven)
+* **Language:** Dart & Kotlin (JVM 17)
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🏗️ Architecture Overview
+This project follows **Clean Architecture** principles, separating concerns into distinct layers:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* **Core:** Global utilities, constants, themes, and shared components used across the app.
+* **Features:** Independent modules for each functionality (e.g., Auth, Chat).
+    * **Presentation:** UI Layer containing Screens (Pages) and Reusable Widgets.
+    * **Domain:** Business logic layer containing Entities and Use Cases.
+    * **Data:** Data layer handling Repositories and Data Sources (API/Local DB).
+
+---
+
+## 📂 Project Structure
+```text
+lib/
+├── core/               # Shared logic & components
+└── features/
+    ├── auth/           # Authentication module
+    └── chat/           # Chat module
+        └── presentation/
+            ├── pages/    # Screen UI (e.g., chat_list_page.dart)
+            └── widgets/  # Reusable components (e.g., chat_app_bar.dart)
+ 
+
