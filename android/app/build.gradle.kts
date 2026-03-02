@@ -3,13 +3,13 @@ import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Load keystore properties
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
+
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
@@ -24,9 +24,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // Kotlin jvmTarget
-    kotlin {
-        jvmToolchain(17)
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     defaultConfig {
@@ -39,25 +38,18 @@ android {
 
     signingConfigs {
         create("release") {
-            val alias = keystoreProperties.getProperty("keyAlias")
-            val keyPass = keystoreProperties.getProperty("keyPassword")
-            val storePass = keystoreProperties.getProperty("storePassword")
-            val storeFilePath = keystoreProperties.getProperty("storeFile")
-
-            if (alias != null && keyPass != null && storePass != null && storeFilePath != null) {
-                keyAlias = alias
-                keyPassword = keyPass
-                storePassword = storePass
-                storeFile = file(storeFilePath)
-            }
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
+            storeFile = keystoreProperties["storeFile"]?.let { file(it as String) }
+            storePassword = keystoreProperties["storePassword"] as String?
         }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false       // <-- keep code shrinking OFF
-            isShrinkResources = false     // <-- also disable resource shrinking
             signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
